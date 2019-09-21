@@ -1,0 +1,16 @@
+.canvas-element-shadow {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background: #343a40 !important;
+}
+
+.dest-canvas {
+    margin: 5px;
+    box-shadow: none;
+    color: white;
+}
+
+.ref-canvas {
+    display: none;
+}

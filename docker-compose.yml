@@ -1,0 +1,11 @@
+version: '3.2'
+services:
+  client-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "nginx -g \"daemon off;\""
+    environment:
+      - BACKEND_IP=localhost:8080
+    ports:
+      - "3100:3000"
