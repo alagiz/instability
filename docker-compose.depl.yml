@@ -4,14 +4,6 @@ services:
     image: instability_client-app:latest
     environment:
       - BACKEND_IP=${HOST_IP}:8080
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 50M
-        reservations:
-          cpus: '0.1'
-          memory: 10M
     command: bash -c "nginx -g \"daemon off;\""
     ports:
       - "3100:80"

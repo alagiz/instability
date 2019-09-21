@@ -2,10 +2,16 @@ version: '3.2'
 services:
   client-app:
     build:
-      context: .
+      context: ./client-app
       dockerfile: Dockerfile
     command: bash -c "nginx -g \"daemon off;\""
     environment:
       - BACKEND_IP=localhost:8080
     ports:
-      - "3100:3000"
+      - "80:80"
+  httpd:
+    build:
+      context: ./httpd
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
