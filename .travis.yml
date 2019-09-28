@@ -6,10 +6,13 @@
 #    - node_modules
 #services:
 #  - docker
+
 variables:
   AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
   AWS_SECRET_ACCESS_KEY: $AWS_SECRET_KEY
   INSTANCE_ID: $INSTANCE_ID
 script:
   - pip install --upgrade --user awscli
+  - aws configure set aws_access_key_id $AWS_ACCESS_KEY
+  - aws configure set aws_secret_access_key $AWS_SECRET_KEY
   - aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-$INSTANCE_ID" --parameters '{"commands":["docker stack ls"],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2
