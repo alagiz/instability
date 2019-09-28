@@ -11,5 +11,6 @@ variables:
   AWS_SECRET_ACCESS_KEY: $AWS_SECRET_KEY
   INSTANCE_ID: $INSTANCE_ID
 script:
+  - sudo apt install python3-pip
   - pip3 install --upgrade --user awscli
   - aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-$INSTANCE_ID" --parameters '{"commands":["docker stack ls"],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2
