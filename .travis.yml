@@ -20,7 +20,7 @@ script:
   - aws configure set metadata_service_num_attempts 3
   - aws configure list
   - aws ssm describe-instance-information --output text
-  - aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-$INSTANCE_ID" --parameters '{"commands":["docker stack ls"],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2
+  - aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-0e06a64b6327cf6a0" --parameters '{"commands":["docker stack ls"],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2
 env:
   global:
     - DEPLOYMENT_REGION=us-east-2
