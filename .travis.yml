@@ -24,6 +24,7 @@ script:
       docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY;
       echo $DOCKER_USERNAME/$DOCKER_REPOSITORY;
       AWS_COMMAND="docker service update --image $DOCKER_USERNAME/$DOCKER_REPOSITORY $DOCKER_SWARM_SERVICE_NAME";
+      AWS_COMMAND_PARAMETERS='{"commands":[$AWS_COMMAND],"executionTimeout":["3600"]}';
       echo $AWS_COMMAND;
       pip install --upgrade --user awscli;
       aws configure set aws_access_key_id $AWS_ACCESS_KEY;
@@ -33,5 +34,5 @@ script:
       aws configure set metadata_service_num_attempts 3;
       aws configure list;
       aws ssm describe-instance-information --output text;
-      aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids i-$INSTANCE_ID --parameters '{"commands":[$AWS_COMMAND],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2;
+      aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids i-$INSTANCE_ID --parameters '{"commands":["$AWS_COMMAND"],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2;
     fi
