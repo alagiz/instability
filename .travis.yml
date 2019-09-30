@@ -15,5 +15,5 @@
 script:
     AWS_COMMAND="docker service update --image $DOCKER_USERNAME/$DOCKER_REPOSITORY $DOCKER_SWARM_SERVICE_NAME";
     AWS_COMMAND_PARAMETERS={"commands":["$AWS_COMMAND"],"executionTimeout":["3600"]};
-    echo AWS_COMMAND;
-    echo AWS_COMMAND_PARAMETERS;
+    echo $AWS_COMMAND;
+    echo $AWS_COMMAND_PARAMETERS;
