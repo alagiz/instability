@@ -7,9 +7,7 @@ cache:
 services:
   - docker
 #
-variables:
-  - DOCKER_USERNAME=$DOCKER_USERNAME
-  - DOCKER_REPOSITORY=$DOCKER_REPOSITORY
+#variables:
 ##  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
 ##  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_KEY
 ##  INSTANCE_ID: $INSTANCE_ID
@@ -24,6 +22,7 @@ script:
       docker build . -t $IMAGE_NAME;
       docker tag $IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY;
       docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY;
+      echo $DOCKER_USERNAME/$DOCKER_REPOSITORY
       pip install --upgrade --user awscli;
       aws configure set aws_access_key_id $AWS_ACCESS_KEY;
       aws configure set aws_secret_access_key $AWS_SECRET_KEY;
@@ -32,5 +31,5 @@ script:
       aws configure set metadata_service_num_attempts 3;
       aws configure list;
       aws ssm describe-instance-information --output text;
-      aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids i-$INSTANCE_ID --parameters '{"commands":["docker service update --image $DOCKER_USERNAME/$DOCKER_REPOSITORY unstableStackk_client-app"],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2;
+      aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids i-$INSTANCE_ID --parameters '{"commands":["docker service update --image alagiz/instability_client-app unstableStackk_client-app"],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2;
     fi
