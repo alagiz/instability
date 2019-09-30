@@ -17,7 +17,6 @@ script:
   - npm i
   - npm test
   - CI=false npm run build
-after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
     docker build . -t $IMAGE_NAME;
