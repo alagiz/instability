@@ -25,7 +25,7 @@ script:
       echo $DOCKER_USERNAME/$DOCKER_REPOSITORY;
       AWS_COMMAND="docker service update --image $DOCKER_USERNAME/$DOCKER_REPOSITORY $DOCKER_SWARM_SERVICE_NAME";
       AWS_COMMAND_PARAMETERS='{"commands":[$AWS_COMMAND],"executionTimeout":["3600"]}'
-      aws ssm put-parameter --name aws_command --value $AWS_COMMAND --type SecureString;
+      aws ssm put-parameter --name "aws_command" --value $AWS_COMMAND --type SecureString;
       echo $AWS_COMMAND;
       pip install --upgrade --user awscli;
       aws configure set aws_access_key_id $AWS_ACCESS_KEY;
