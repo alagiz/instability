@@ -35,5 +35,5 @@ script:
       aws configure list;
       aws ssm put-parameter --name "aws_command" --value $AWS_COMMAND --type String;
       aws ssm describe-instance-information --output text;
-      aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids i-$INSTANCE_ID --parameters '{"commands":["echo {{ssm:aws_command}}"],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2;
+      aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids i-$INSTANCE_ID --parameters '{"commands":["{{ssm:aws_command}}"],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2;
     fi
