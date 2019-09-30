@@ -1,11 +1,11 @@
 language: node_js
 node_js:
-    - "stable"
+  - "stable"
 cache:
-    directories:
-        - node_modules
+  directories:
+    - node_modules
 services:
-    - docker
+  - docker
 #
 #variables:
 ##  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
@@ -13,25 +13,27 @@ services:
 ##  INSTANCE_ID: $INSTANCE_ID
 #  DOCKER_SWARM_UPDATE_COMMAND: "docker service update unstableStackk_client-app --image alagiz/instability_client-app"
 script:
-    - cd client-app
-    - npm i
-    - npm test
-    - CI=false npm run build
-    - if [ "$TRAVIS_BRANCH" == "master" ]; then
-        docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-        docker build . -t $IMAGE_NAME;
-        docker tag $IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY;
-        docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY;
-        echo $DOCKER_USERNAME/$DOCKER_REPOSITORY;
-        AWS_COMMAND="docker service update --image $DOCKER_USERNAME/$DOCKER_REPOSITORY $DOCKER_SWARM_SERVICE_NAME";
-        echo $AWS_COMMAND;
-        pip install --upgrade --user awscli;
-        aws configure set aws_access_key_id $AWS_ACCESS_KEY;
-        aws configure set aws_secret_access_key $AWS_SECRET_KEY;
-        aws configure set default.region $DEPLOYMENT_REGION;
-        aws configure set metadata_service_timeout 1200;
-        aws configure set metadata_service_num_attempts 3;
-        aws configure list;
-        aws ssm describe-instance-information --output text;
-        aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids i-$INSTANCE_ID --parameters {"commands":["$AWS_COMMAND"],"executionTimeout":["3600"]} --timeout-seconds 600 --region us-east-2;
-        fi
+  - cd client-app
+  - npm i
+  - npm test
+  - CI=false npm run build
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+      docker build . -t $IMAGE_NAME;
+      docker tag $IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY;
+      docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY;
+      echo $DOCKER_USERNAME/$DOCKER_REPOSITORY;
+      AWS_COMMAND="docker service update --image $DOCKER_USERNAME/$DOCKER_REPOSITORY $DOCKER_SWARM_SERVICE_NAME";
+      AWS_COMMAND_PARAMETERS='{"commands":[$AWS_COMMAND],"executionTimeout":["3600"]}'
+      aws ssm put-parameter --name aws_command --value $AWS_COMMAND --type SecureString;
+      echo $AWS_COMMAND;
+      pip install --upgrade --user awscli;
+      aws configure set aws_access_key_id $AWS_ACCESS_KEY;
+      aws configure set aws_secret_access_key $AWS_SECRET_KEY;
+      aws configure set default.region $DEPLOYMENT_REGION;
+      aws configure set metadata_service_timeout 1200;
+      aws configure set metadata_service_num_attempts 3;
+      aws configure list;
+      aws ssm describe-instance-information --output text;
+      aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids i-$INSTANCE_ID --parameters '{"commands":["echo {{ssm:aws_command}}"],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2;
+    fi
