@@ -20,8 +20,8 @@ script:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
       docker build . -t $IMAGE_NAME;
-      docker tag $IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY:$TRAVIS_BUILD_ID;
-      docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:$TRAVIS_BUILD_ID;
+      docker tag $IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY;
+      docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY;
       pip install --upgrade --user awscli;
       aws configure set aws_access_key_id $AWS_ACCESS_KEY;
       aws configure set aws_secret_access_key $AWS_SECRET_KEY;
