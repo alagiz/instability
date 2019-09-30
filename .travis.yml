@@ -10,7 +10,7 @@ services:
 #variables:
 ##  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
 ##  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_KEY
-##  INSTANCE_ID: $INSTANCE_ID
+##  INSTANCE_ID: $INSTANCE_IDD
 #  DOCKER_SWARM_UPDATE_COMMAND: AWS_COMMAND="docker service update unstableStackk_client-app --image alagiz/instability_client-app"
 script:
   - cd client-app
