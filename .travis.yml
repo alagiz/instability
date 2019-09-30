@@ -13,6 +13,7 @@ services:
 ##  INSTANCE_ID: $INSTANCE_ID
 #  DOCKER_SWARM_UPDATE_COMMAND: "docker service update unstableStackk_client-app --image alagiz/instability_client-app"
 script:
+  - cd client-app
   - npm test
   - npm run build
 after_success:
