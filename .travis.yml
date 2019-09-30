@@ -11,7 +11,7 @@ services:
 ##  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY
 ##  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_KEY
 ##  INSTANCE_ID: $INSTANCE_ID
-#  DOCKER_SWARM_UPDATE_COMMAND: "docker service update unstableStackk_client-app --image alagiz/instability_client-app"
+#  DOCKER_SWARM_UPDATE_COMMAND: AWS_COMMAND="docker service update unstableStackk_client-app --image alagiz/instability_client-app"
 script:
   - cd client-app
   - npm i
@@ -23,7 +23,7 @@ script:
       docker tag $IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY;
       docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY;
       echo $DOCKER_USERNAME/$DOCKER_REPOSITORY;
-      AWS_COMMAND="docker service update --image $DOCKER_USERNAME/$DOCKER_REPOSITORY $DOCKER_SWARM_SERVICE_NAME";
+      AWS_COMMAND="docker service update $DOCKER_SWARM_SERVICE_NAME --image $DOCKER_USERNAME/$DOCKER_REPOSITORY";
       echo $AWS_COMMAND;
       pip install --upgrade --user awscli;
       aws configure set aws_access_key_id $AWS_ACCESS_KEY;
