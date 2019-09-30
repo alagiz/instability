@@ -14,5 +14,5 @@
 #  DOCKER_SWARM_UPDATE_COMMAND: "docker service update unstableStackk_client-app --image alagiz/instability_client-app"
 script:
     AWS_COMMAND="docker service update --image $DOCKER_USERNAME/$DOCKER_REPOSITORY $DOCKER_SWARM_SERVICE_NAME";
-    AWS_COMMAND_PARAMETERS='{"commands":["$AWS_COMMAND"],"executionTimeout":["3600"]}';
+    AWS_COMMAND_PARAMETERS=`{"commands":["$AWS_COMMAND"],"executionTimeout":["3600"]}`;
     echo AWS_COMMAND_PARAMETERS;
