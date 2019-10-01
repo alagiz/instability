@@ -1,9 +1,9 @@
 version: '3.2'
 services:
   client-app:
-    image: instability_client-app:latest
+    image: alagiz/instability_client-app:latest
     environment:
       - BACKEND_IP=${HOST_IP}:8080
     command: bash -c "nginx -g \"daemon off;\""
     ports:
-      - "3100:80"
+      - "80:80"
