@@ -22,9 +22,7 @@ script:
       docker build . -t $IMAGE_NAME;
       docker tag $IMAGE_NAME $DOCKER_USERNAME/$DOCKER_REPOSITORY;
       docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY;
-      echo $DOCKER_USERNAME/$DOCKER_REPOSITORY;
       AWS_COMMAND="docker service update --force $DOCKER_SWARM_SERVICE_NAME --image $DOCKER_USERNAME/$DOCKER_REPOSITORY";
-      echo $AWS_COMMAND;
       pip install --upgrade --user awscli;
       aws configure set aws_access_key_id $AWS_ACCESS_KEY;
       aws configure set aws_secret_access_key $AWS_SECRET_KEY;
