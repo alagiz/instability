@@ -30,4 +30,4 @@ script:
       aws ssm describe-instance-information --output text;
       aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids i-$INSTANCE_ID --parameters '{"commands":['\""$RESULTING_COMMAND"\"'],"executionTimeout":["3600"]}' --timeout-seconds 600 --region $DEPLOYMENT_REGION;
     fi
-#TODO: concatenating strings as below in --parameters introduces vulnerability of possible command injection, so it needs to change
+#TODO: concatenating strings as in --parameters above introduces vulnerability of possible command injection, it needs to change
