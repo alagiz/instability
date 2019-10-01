@@ -81,7 +81,7 @@ class ShadowsPicture extends Component {
             var max = mmax(r, g, b), min = mmin(r, g, b);
             var h, s, l = (max + min) / 2;
 
-            if (max == min) {
+            if (max === min) {
                 h = s = 0; // achromatic
             } else {
                 var d = max - min;
@@ -95,6 +95,9 @@ class ShadowsPicture extends Component {
                         break;
                     case b:
                         h = (r - g) / d + 4;
+                        break;
+                    default:
+                        h = 1;
                         break;
                 }
                 h /= 6;
@@ -201,8 +204,7 @@ class ShadowsPicture extends Component {
 
         function move() {
 
-            let part, prev, dir, hue, r, g, b, h, s, l;
-            let mindeltar;
+            let part, prev, dir, r, g, b, h, s, l;
             let intx, inty; // position of particle in integer numbers
 
             for (let k = 0; k < nbParticles; ++k) {
@@ -262,9 +264,6 @@ class ShadowsPicture extends Component {
             let srcCtx = this.refs.referenceCanvas.getContext('2d');
 
             destCtx = this.refs.destCanvas.getContext('2d');
-
-            const hSize = img.width; // original image
-            const vSize = img.height;
 
             dimx = tWidth;
             dimy = tWidth * img.height / img.width;
@@ -386,15 +385,6 @@ class ShadowsPicture extends Component {
                 msg.innerHTML = '&nbsp;'
             }, 2000);
         } // displayError
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        function emptyElement(container) {
-            while (container.firstChild) {
-                emptyElement(container.firstChild);          // remove children recursively
-                container.removeChild(container.firstChild);
-            } // while
-
-        } // emptyElement
 
         //--------------------------------------------------------------------
 
