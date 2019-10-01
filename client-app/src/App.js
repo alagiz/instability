@@ -6,7 +6,7 @@ import Instability from './components/unstable-picture/component';
 function App() {
     return (
         <div className="app">
-            INSTABILITY 94
+            INSTABILITY 95
             <Instability/>
         </div>
     );
