@@ -18,7 +18,7 @@ script:
         docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY;
         DOCKER_PULL_COMMAND="docker pull $DOCKER_USERNAME/$DOCKER_REPOSITORY:$DOCKER_IMAGE_TAG"
         DOCKER_SERVICE_UPDATE_COMMAND="docker service update --force $DOCKER_SWARM_SERVICE_NAME --image $DOCKER_USERNAME/$DOCKER_REPOSITORY:$DOCKER_IMAGE_TAG";
-        DOCKER_CLEANUP_COMMAND="docker system prune -af && docker volume prune -af";
+        DOCKER_CLEANUP_COMMAND="docker system prune -af && docker volume prune -f";
         RESULTING_COMMAND="$DOCKER_PULL_COMMAND && $DOCKER_SERVICE_UPDATE_COMMAND && $DOCKER_CLEANUP_COMMAND";
         pip install --upgrade --user awscli;
         aws configure set aws_access_key_id $AWS_ACCESS_KEY;
