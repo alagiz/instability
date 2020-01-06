@@ -3,7 +3,7 @@ FROM node:alpine as react-build
 
 WORKDIR /app
 COPY package.json .
-COPY package-lock.json .
+COPY yarn.lock .
 RUN yarn
 COPY . .
 RUN yarn build
